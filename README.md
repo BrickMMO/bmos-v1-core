@@ -1,6 +1,4 @@
-# os
-
-BrickMMO OS in Python
+# BMOS
 
 This repo will eventually store two copies of SD card images:
 
@@ -12,6 +10,7 @@ EV3 BMOS is a revised copy of the [EV3 MicroPython SD card image](https://educat
 - Automatic restarts
 - Automatic pairing of new Spike, EV3, and BrickPi hubs
 - Automatic sharing of Wifi credentials
+- Dissemination of Spike hubs instructions
 
 ## BrickPi BMOS
 
@@ -19,7 +18,7 @@ Same features as EV3 BMOS except uses the [Raspian for Robots image](https://www
 
 ## Spike BMOS
 
-The Spike hubs do not include an SD card slot. This OS is purely a [spike-python](https://github.com/BrickMMO/spike-python) script that will manually need to be added to each Spike hub. It includes the same features as EV3 BMOS.
+The Spike hubs do not include an SD card slot. The same features are included in a [spike-python](https://github.com/BrickMMO/spike-python) script that needs to be manually added to each hub.
 
 ---
 

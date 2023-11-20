@@ -111,7 +111,7 @@ def updateRepeat():
     f = open(".config", "w")
     f.write("LAST_UPDATE=" + LAST_PUSH)
 
-    url = 'https://raw.githubusercontent.com/BrickMMO/bmos/main/ev3/repeat.py'
+    url = 'https://raw.githubusercontent.com/BrickMMO/bmos/main/ev3/repeat.py?test'
 
     headers = {
         'Cache-Control': 'no-cache',

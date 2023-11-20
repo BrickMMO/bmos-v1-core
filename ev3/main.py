@@ -119,6 +119,8 @@ def updateRepeat():
     response = requests.get(url, headers = headers)
     response = response.text
 
+    print(response)
+
     f = open("bmos" + LAST_PUSH + ".py", "w")
     f.write(response)
 

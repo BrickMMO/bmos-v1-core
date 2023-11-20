@@ -1,0 +1,9 @@
+[Unit]
+Description=BMOS
+After=default.target
+
+[Install]
+WantedBy=default.target
+
+[Service]
+ExecStart=/usr/bin/brickrun --directory="/home/robot/ev3" "/home/robot/ev3/main.py"

@@ -1,1 +1,3 @@
-print('REPEAT')
+def execute():
+  
+  print('REPEAT')

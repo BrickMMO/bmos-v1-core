@@ -11,4 +11,4 @@ def execute():
   
   print('REPEAT UPDATE 3')
 
-  ev3.speaker.say("Updated")
+  ev3.speaker.say("Updated 2")

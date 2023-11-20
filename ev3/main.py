@@ -103,7 +103,7 @@ def getLastUpdate():
 
     # print(LAST_PUSH)
 
-def update_repeat():
+def updateRepeat():
 
     f = open(".config", "w")
     f.write("LAST_UPDATE=" + LAST_PUSH)
@@ -140,6 +140,9 @@ while True:
     else:
 
         print("No update requried")
+
+    exec("import bmos" + LAST_PUSH)
+    exec("bmos" + LAST_PUSH + ".execute()")
 
     print("Waiting 10 seconds")
     time.sleep(10)

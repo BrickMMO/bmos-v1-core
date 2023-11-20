@@ -1,3 +1,3 @@
 def execute():
   
-  print('REPEAT')
+  print('REPEAT UPDATE')

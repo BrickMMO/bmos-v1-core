@@ -69,6 +69,9 @@ def getLastUpdate():
     url = 'https://api.github.com/repos/BrickMMO/bmos'
 
     headers = {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Expires': '0',
         'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN,
         'Content-Type': 'application/json',
         'User-Agent' : 'BMOS'
@@ -111,6 +114,9 @@ def updateRepeat():
     url = 'https://raw.githubusercontent.com/BrickMMO/bmos/main/ev3/repeat.py'
 
     headers = {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Expires': '0',
         'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN,
         'Content-Type': 'application/json',
         'User-Agent' : 'BMOS'

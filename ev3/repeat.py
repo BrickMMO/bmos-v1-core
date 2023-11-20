@@ -8,7 +8,5 @@ from pybricks.tools import wait
 ev3 = EV3Brick()
 
 def execute():
-  
-  print('REPEAT UPDATE 3')
 
-  ev3.speaker.say("Updated 4")
+  ev3.speaker.say("UPDATED")

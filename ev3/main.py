@@ -137,8 +137,7 @@ def updateRepeat():
 
     print(response)
 
-    # f = open("bmos" + LAST_PUSH + ".py", "w")
-    f = open("repeat.py", "w")
+    f = open("bmos" + LAST_PUSH + ".py", "w")
     f.write(response)
 
 
@@ -161,8 +160,8 @@ while True:
 
         print("No update requried")
 
-    exec("import repeat")
-    exec("repeat.execute()")
+    exec("import bmos" + LAST_PUSH)
+    exec("bmos" + LAST_PUSH + ".execute()")
 
     print("Waiting 10 seconds")
     time.sleep(10)

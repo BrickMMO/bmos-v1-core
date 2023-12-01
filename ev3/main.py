@@ -140,27 +140,34 @@ def updateRepeat():
     f = open("bmos" + LAST_PUSH + ".py", "w")
     f.write(response)
 
-
-counter = 0
+'''
+This is the main loop that controls what happens when
+'''
 
 while True:
 
+    # Check .env file and update global variables
     updateEnv()
+
+    # Check .config file and update global variables
     updateConfig()
 
+    # Check GitHub for last update dtae
     getLastUpdate()
 
+    # If there is new code on GitHub update repeat module
     if(LAST_PUSH > LAST_UPDATE):
 
         print("Update requried")
         
         updateRepeat()
+        exec("import bmos" + LAST_PUSH)
         
     else:
 
         print("No update requried")
 
-    exec("import bmos" + LAST_PUSH)
+    
     exec("bmos" + LAST_PUSH + ".execute()")
 
     print("Waiting 10 seconds")

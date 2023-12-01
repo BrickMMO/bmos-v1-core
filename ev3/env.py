@@ -18,9 +18,6 @@ def load():
 
             data[str(line[0])] = str(line[1]).strip()
 
-            # exec("global " + str(data[0]))
-            # exec("" + str(data[0]) + " = \"" + str(data[1]).strip() + "\"")
-
 def get(key):
 
     global data

@@ -9,4 +9,4 @@ ev3 = EV3Brick()
 
 def execute():
 
-  ev3.speaker.say("UPDATED")
+  ev3.speaker.say("SOMETHING ELSE")

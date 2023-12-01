@@ -7,12 +7,17 @@ import urequests as requests
 import ujson as json
 
 
+'''
+This function opens the .env file and creates global variables for 
+each line in the .env file. 
+'''
+
 def updateEnv():
 
     try:
         f = open(".env", "r")
     except:
-        print(".en file does not exist")
+        print(".env file does not exist")
         exit()
 
     for line in f:
@@ -31,12 +36,17 @@ def updateEnv():
         print("GITHUB_ACCESS_TOKEN variable does not exist")
         exit()
 
+'''
+This function opens the .config file and creates global variables for 
+each line in the .config file. 
+'''
+
 def updateConfig():
 
     try:
         f = open(".config", "r")
     except:
-        print(".en file does not exist")
+        print(".config file does not exist")
         exit()
 
     for line in f:
@@ -55,10 +65,14 @@ def updateConfig():
         print("LAST_UPDATE variable does not exist")
         exit()
 
+'''
+This function checks the bmos-v1-core repo for the last update and sets a 
+global variable.
+'''
 
 def getLastUpdate():
 
-    url = 'https://api.github.com/repos/BrickMMO/bmos'
+    url = 'https://api.github.com/repos/BrickMMO/bmos-v1-core'
 
     headers = {
         'Cache-Control': 'no-cache',
@@ -98,12 +112,16 @@ def getLastUpdate():
 
     # print(LAST_PUSH)
 
+'''
+This function will download the newest 
+'''
+
 def updateRepeat():
 
     f = open(".config", "w")
     f.write("LAST_UPDATE=" + LAST_PUSH)
 
-    url = 'https://raw.githubusercontent.com/BrickMMO/bmos/main/ev3/repeat.py?last=' + LAST_PUSH
+    url = 'https://raw.githubusercontent.com/BrickMMO/bmos-v1-core/main/ev3/repeat.py?last=' + LAST_PUSH
 
     headers = {
         'Cache-Control': 'no-cache',
@@ -119,10 +137,12 @@ def updateRepeat():
 
     print(response)
 
-    f = open("bmos" + LAST_PUSH + ".py", "w")
+    # f = open("bmos" + LAST_PUSH + ".py", "w")
+    f = open("repeat.py", "w")
     f.write(response)
 
 
+counter = 0
 
 while True:
 
@@ -141,8 +161,8 @@ while True:
 
         print("No update requried")
 
-    exec("import bmos" + LAST_PUSH)
-    exec("bmos" + LAST_PUSH + ".execute()")
+    exec("import repeat")
+    exec("repeat.execute()")
 
     print("Waiting 10 seconds")
     time.sleep(10)

@@ -6,192 +6,58 @@ import os, time
 import urequests as requests
 import ujson as json
 
+import env
+import config
+import github
 
-'''
-This function opens the .env file and creates global variables for 
-each line in the .env file. 
-'''
+github.set_token(env.get('GITHUB_ACCESS_TOKEN'))
 
-def updateEnv():
+if config.get('LAST_UPDATE') == False:
 
-    try:
-        f = open(".env", "r")
-    except:
-        print(".env file does not exist")
-        exit()
-
-    for line in f:
-
-        data = line.split('=')
-
-        if len(data) > 1:
-
-            # print("global " + str(data[0]) + " = \"" + str(data[1]).strip() + "\"")
-            exec("global " + str(data[0]))
-            exec("" + str(data[0]) + " = \"" + str(data[1]).strip() + "\"")
-
-    try:
-        GITHUB_ACCESS_TOKEN
-    except:
-        print("GITHUB_ACCESS_TOKEN variable does not exist")
-        exit()
-
-'''
-This function opens the .config file and creates global variables for 
-each line in the .config file. 
-'''
-
-def updateConfig():
-
-    try:
-        f = open(".config", "r")
-    except:
-        print(".config file does not exist")
-        exit()
-
-    for line in f:
-
-        data = line.split('=')
-
-        if len(data) > 1:
-
-            # print("global "  + str(data[0]) + " = \"" + str(data[1]).strip() + "\"")
-            exec("global " + str(data[0]))
-            exec("" + str(data[0]) + " = \"" + str(data[1]).strip() + "\"")
-
-    try:
-        LAST_UPDATE
-    except:
-        print("LAST_UPDATE variable does not exist")
-        exit()
-
-'''
-This function checks the bmos-v1-core repo for the last update and sets a 
-global variable.
-'''
-
-def getLastUpdate():
-
-    url = 'https://api.github.com/repos/BrickMMO/bmos-v1-core'
-
-    headers = {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-        'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN,
-        'Content-Type': 'application/json',
-        'User-Agent' : 'BMOS'
-    }
-
-    response = requests.get(url, headers = headers)
-
-    response = json.loads(response.text)
-
-    # print(response)
-    # print(response['pushed_at'])
-
-    pushed_at = response['pushed_at']   
-    # print(pushed_at)
-
-    year = pushed_at[0:4]
-    month = pushed_at[5:7]
-    day = pushed_at[8:10]
-    hours = pushed_at[11:13]
-    minutes = pushed_at[14:16]
-    seconds = pushed_at[17:19]
-
-    # print(year)
-    # print(month)
-    # print(day)
-    # print(hours)
-    # print(minutes)
-    # print(seconds)
-
-    global LAST_PUSH
-    LAST_PUSH = str(year) + str(month) + str(day) + str(hours) + str(minutes) + str(seconds)
-
-    # print(LAST_PUSH)
-
-'''
-This function will download the newest 
-'''
-
-def updateRepeat():
-
-    f = open(".config", "w")
-    f.write("LAST_UPDATE=" + LAST_PUSH)
-
-    url = 'https://raw.githubusercontent.com/BrickMMO/bmos-v1-core/main/ev3/repeat.py?last=' + LAST_PUSH
-
-    headers = {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-        'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN,
-        'Content-Type': 'application/json',
-        'User-Agent' : 'BMOS'
-    }
-
-    response = requests.get(url, headers = headers)
-    response = response.text
-
-    print(response)
-
-    f = open("bmos" + LAST_PUSH + ".py", "w")
-    f.write(response)
+    config.set('LAST_UPDATE', '000')
 
 '''
 This is the main loop that controls what happens when
 '''
 
-while True:
+    
+    
 
-    # Check .env file and update global variables
-    updateEnv()
 
-    # Check .config file and update global variables
-    updateConfig()
 
-    # Check GitHub for last update dtae
-    getLastUpdate()
+def update_repeat():
 
-    # If there is new code on GitHub update repeat module
-    if(LAST_PUSH > LAST_UPDATE):
+    last_push = github.repo_last_push('BrickMMO', 'bmos-v1-core')
+    # print(last_push)
 
-        print("Update requried")
-        
-        updateRepeat()
-        exec("import bmos" + LAST_PUSH)
-        
+    if(last_push > config.get('LAST_UPDATE')):
+
+        print('NOTICE: Update needed')
+
+        repeat = github.fetch_file('BrickMMO', 'bmos-v1-core', 'main', 'ev3/repeat.py')
+
+        config.set('LAST_UPDATE', last_push)
+
+        f = open("bmos" + config.get('LAST_UPDATE') + ".py", "w")
+        f.write(repeat)
+        f.close()
+
     else:
 
-        print("No update requried")
+        print('NOTICE: No update needed')
 
-    
-    exec("bmos" + LAST_PUSH + ".execute()")
+
+while True:
+
+    update_repeat()
+
+    print('Notice: Import bmos' + config.get('LAST_UPDATE'))
+
+    exec("import bmos" + config.get('LAST_UPDATE'))
+    exec("bmos" + config.get('LAST_UPDATE') + ".execute()")
 
     print("Waiting 10 seconds")
     time.sleep(10)
 
 
 print("DONE")
-
-
-
-exit()
-
-try: 
-    f = open("bmos" + str(LAST_UPDATE) + ".py", "r")
-except:
-    print("BMOS file does not exist")
-    exit()
-
-
-
-'''
-while True:
-
-    time.sleep(10)
-
-    print("Looping!")
-'''

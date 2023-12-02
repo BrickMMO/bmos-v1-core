@@ -9,6 +9,7 @@ import ujson as json
 import env
 import config
 import github
+import brickmmo
 
 # Use env variable to cinfigure GitHub
 github.set_token(env.get('GITHUB_ACCESS_TOKEN'))
@@ -23,7 +24,6 @@ This is the main loop that controls what happens when
 '''
 
 def update_repeat():
-
 
     last_push = github.repo_last_push('BrickMMO', 'bmos-v1-core')
 
@@ -48,9 +48,13 @@ while True:
 
     update_repeat()
 
-    if config.get('ID') == '':
+    while config.get('ID') == '':
 
         print('IM HERE')
+
+        time.sleep(5)
+
+
 
     print('Notice: Import bmos' + config.get('LAST_UPDATE'))
 

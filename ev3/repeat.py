@@ -10,4 +10,4 @@ ev3 = EV3Brick()
 def execute():
 
   ev3.speaker.set_volume(30)
-  ev3.speaker.say("CHANGE 21")
+  ev3.speaker.say("CHANGE ONE")

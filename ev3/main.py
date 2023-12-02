@@ -10,25 +10,22 @@ import env
 import config
 import github
 
+# Use env variable to cinfigure GitHub
 github.set_token(env.get('GITHUB_ACCESS_TOKEN'))
 
 if config.get('LAST_UPDATE') == False:
 
     config.set('LAST_UPDATE', '000')
 
+
 '''
 This is the main loop that controls what happens when
 '''
 
-    
-    
-
-
-
 def update_repeat():
 
+
     last_push = github.repo_last_push('BrickMMO', 'bmos-v1-core')
-    # print(last_push)
 
     if(last_push > config.get('LAST_UPDATE')):
 
@@ -50,6 +47,10 @@ def update_repeat():
 while True:
 
     update_repeat()
+
+    if config.get('ID') == '':
+
+        print('IM HERE')
 
     print('Notice: Import bmos' + config.get('LAST_UPDATE'))
 
